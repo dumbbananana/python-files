@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinTrack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="fin.css"/>
+</head>
+<body>
+
+  <!-- =============================================
+       APP SHELL
+  ============================================== -->
+  <div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="sidebar-logo">
+        <div class="logo-mark">Fin<span>Track</span></div>
+        <div class="logo-sub">Personal Finance</div>
+      </div>
+
+      <!-- USER BADGE -->
+      <div class="sidebar-user">
+        <div class="user-avatar">JD</div>
+        <div class="user-info">
+          <div class="user-name">John Doe</div>
+          <div class="user-role">Personal Account</div>
+        </div>
+      </div>
+
+      <!-- MAIN NAV -->
+      <nav class="sidebar-nav">
+
+        <div class="nav-section">
+          <div class="nav-label">Overview</div>
+          <a href="#" class="nav-item active" data-page="dashboard">
+            <span class="nav-icon">◈</span>
+            <span>Dashboard</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-label">Money</div>
+          <a href="#" class="nav-item" data-page="transactions">
+            <span class="nav-icon">⇄</span>
+            <span>Transactions</span>
+          </a>
+          <a href="#" class="nav-item" data-page="budgets">
+            <span class="nav-icon">◎</span>
+            <span>Budgets</span>
+          </a>
+          <a href="#" class="nav-item" data-page="bills">
+            <span class="nav-icon">◷</span>
+            <span>Bills &amp; Recurring</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-label">Growth</div>
+          <a href="#" class="nav-item" data-page="investments">
+            <span class="nav-icon">↗</span>
+            <span>Investments</span>
+          </a>
+          <a href="#" class="nav-item" data-page="goals">
+            <span class="nav-icon">◉</span>
+            <span>Savings Goals</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-label">Insights</div>
+          <a href="#" class="nav-item" data-page="reports">
+            <span class="nav-icon">▦</span>
+            <span>Reports</span>
+            <span class="nav-badge">Soon</span>
+          </a>
+          <a href="#" class="nav-item" data-page="tax">
+            <span class="nav-icon">▤</span>
+            <span>Tax Summary</span>
+            <span class="nav-badge">Soon</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-label">Account</div>
+          <a href="#" class="nav-item" data-page="settings">
+            <span class="nav-icon">◧</span>
+            <span>Settings</span>
+          </a>
+        </div>
+
+      </nav>
+
+      <!-- SIDEBAR FOOTER -->
+      <div class="sidebar-footer">
+        <a href="#" class="nav-item logout-btn">
+          <span class="nav-icon">⊗</span>
+          <span>Log Out</span>
+        </a>
+      </div>
+
+    </aside>
+    <!-- END SIDEBAR -->
+
+    <!-- MAIN AREA -->
+    <div class="main-area">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        <div class="topbar-right">
+          <div class="topbar-date" id="topbarDate"></div>
+          <button class="btn btn-accent" id="quickAddBtn">+ Add Transaction</button>
+        </div>
+      </header>
+      <!-- END TOPBAR -->
+
+      <!-- PAGE CONTENT -->
+      <main class="page-content" id="pageContent">
+
+        <!-- ==========================================
+             PAGE: DASHBOARD
+        =========================================== -->
+        <section class="page" id="page-dashboard">
+
+          <!-- SUMMARY CARDS ROW -->
+          <div class="cards-row">
+            <div class="card card-balance">
+              <div class="card-label">Net Balance</div>
+              <div class="card-value">$0.00</div>
+              <div class="card-sub">All time</div>
+            </div>
+            <div class="card card-income">
+              <div class="card-label">Income</div>
+              <div class="card-value">$0.00</div>
+              <div class="card-sub">This month</div>
+            </div>
+            <div class="card card-expense">
+              <div class="card-label">Expenses</div>
+              <div class="card-value">$0.00</div>
+              <div class="card-sub">This month</div>
+            </div>
+            <div class="card card-savings">
+              <div class="card-label">Saved</div>
+              <div class="card-value">$0.00</div>
+              <div class="card-sub">This month</div>
+            </div>
+          </div>
+
+          <!-- CHARTS ROW -->
+          <div class="charts-row">
+            <div class="chart-box chart-box--wide">
+              <div class="chart-header">
+                <div class="chart-title">Income vs Expenses</div>
+                <div class="chart-sub">Last 6 months</div>
+              </div>
+              <!-- Django will inject JSON data here via template tag -->
+              <!-- Chart.js bar chart renders into this canvas -->
+              <div class="chart-canvas-wrap">
+                <canvas id="barChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-box">
+              <div class="chart-header">
+                <div class="chart-title">Spending by Category</div>
+                <div class="chart-sub">This month</div>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="pieChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- BOTTOM ROW: RECENT TRANSACTIONS + BUDGET OVERVIEW -->
+          <div class="bottom-row">
+
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Recent Transactions</div>
+                <a href="#" class="panel-link" data-page="transactions">View all →</a>
+              </div>
+              <div class="panel-body">
+                <!-- Populated by Django template loop / JS for now -->
+                <div class="tx-list" id="recentTxList">
+                  <div class="tx-empty">No transactions yet. Add one above.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Budget Overview</div>
+                <a href="#" class="panel-link" data-page="budgets">Manage →</a>
+              </div>
+              <div class="panel-body">
+                <!-- Budget progress bars — Django will loop over budget objects -->
+                <div class="budget-list" id="budgetOverviewList">
+                  <div class="tx-empty">No budgets set yet.</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+        <!-- END DASHBOARD -->
+
+
+        <!-- ==========================================
+             PAGE: TRANSACTIONS
+        =========================================== -->
+        <section class="page hidden" id="page-transactions">
+
+          <div class="page-header">
+            <div>
+              <div class="page-title">Transactions</div>
+              <div class="page-sub">All income and expense records</div>
+            </div>
+            <button class="btn btn-accent" id="addTxBtn">+ New Transaction</button>
+          </div>
+
+          <!-- FILTERS BAR -->
+          <div class="filters-bar">
+            <select class="filter-select" id="filterType">
+              <option value="">All Types</option>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+            <select class="filter-select" id="filterCategory">
+              <option value="">All Categories</option>
+              <!-- Django will populate options via template -->
+            </select>
+            <input type="month" class="filter-input" id="filterMonth"/>
+            <button class="btn btn-ghost" id="filterReset">Reset</button>
+          </div>
+
+          <!-- TRANSACTION TABLE -->
+          <div class="table-wrap">
+            <table class="data-table" id="txTable">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Type</th>
+                  <th class="align-right">Amount</th>
+                  <th class="align-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="txTableBody">
+                <!-- Django: {% for tx in transactions %} row here {% endfor %} -->
+                <tr class="empty-row">
+                  <td colspan="6">No transactions found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </section>
+        <!-- END TRANSACTIONS -->
+
+
+        <!-- ==========================================
+             PAGE: BUDGETS
+        =========================================== -->
+        <section class="page hidden" id="page-budgets">
+
+          <div class="page-header">
+            <div>
+              <div class="page-title">Budgets</div>
+              <div class="page-sub">Monthly spending limits by category</div>
+            </div>
+            <button class="btn btn-accent" id="addBudgetBtn">+ New Budget</button>
+          </div>
+
+          <!-- MONTH SELECTOR -->
+          <div class="filters-bar">
+            <input type="month" class="filter-input" id="budgetMonth"/>
+          </div>
+
+          <!-- BUDGET CARDS GRID -->
+          <div class="budget-grid" id="budgetGrid">
+            <!-- Django: {% for budget in budgets %} card here {% endfor %} -->
+            <div class="budget-card placeholder-card">
+              <div class="budget-card-name">Housing</div>
+              <div class="budget-card-amounts">
+                <span class="spent">$0</span>
+                <span class="limit">/ $0</span>
+              </div>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" style="width: 0%"></div>
+              </div>
+              <div class="budget-card-footer">
+                <span class="remaining">$0 remaining</span>
+                <span class="pct">0%</span>
+              </div>
+            </div>
+            <!-- more cards rendered by Django template loop -->
+          </div>
+
+        </section>
+        <!-- END BUDGETS -->
+
+
+        <!-- ==========================================
+             PAGE: BILLS & RECURRING
+        =========================================== -->
+        <section class="page hidden" id="page-bills">
+
+          <div class="page-header">
+            <div>
+              <div class="page-title">Bills &amp; Recurring</div>
+              <div class="page-sub">Upcoming and recurring payments</div>
+            </div>
+            <button class="btn btn-accent" id="addBillBtn">+ New Bill</button>
+          </div>
+
+          <!-- STATUS TABS -->
+          <div class="tab-bar">
+            <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
+            <button class="tab-btn" data-tab="paid">Paid</button>
+            <button class="tab-btn" data-tab="all">All</button>
+          </div>
+
+          <!-- BILLS LIST -->
+          <div class="bills-list" id="billsList">
+            <!-- Django: {% for bill in bills %} bill row here {% endfor %} -->
+            <div class="tx-empty">No bills added yet.</div>
+          </div>
+
+        </section>
+        <!-- END BILLS -->
+
+
+        <!-- ==========================================
+             PAGE: INVESTMENTS
+        =========================================== -->
+        <section class="page hidden" id="page-investments">
+
+          <div class="page-header">
+            <div>
+              <div class="page-title">Investments</div>
+              <div class="page-sub">Portfolio and savings tracking</div>
+            </div>
+            <button class="btn btn-accent" id="addInvestBtn">+ Add Entry</button>
+          </div>
+
+          <!-- INVESTMENT SUMMARY CARDS -->
+          <div class="cards-row">
+            <div class="card">
+              <div class="card-label">Total Invested</div>
+              <div class="card-value">$0.00</div>
+            </div>
+            <div class="card">
+              <div class="card-label">Current Value</div>
+              <div class="card-value">$0.00</div>
+            </div>
+            <div class="card card-income">
+              <div class="card-label">Total Return</div>
+              <div class="card-value">+$0.00</div>
+            </div>
+            <div class="card">
+              <div class="card-label">Return %</div>
+              <div class="card-value">0.00%</div>
+            </div>
+          </div>
+
+          <!-- INVESTMENT TABLE -->
+          <div class="table-wrap">
+            <table class="data-table" id="investTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Date Added</th>
+                  <th class="align-right">Invested</th>
+                  <th class="align-right">Current Value</th>
+                  <th class="align-right">Return</th>
+                  <th class="align-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="investTableBody">
+                <tr class="empty-row">
+                  <td colspan="7">No investments recorded yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </section>
+        <!-- END INVESTMENTS -->
+
+
+        <!-- ==========================================
+             PAGE: SAVINGS GOALS
+        =========================================== -->
+        <section class="page hidden" id="page-goals">
+
+          <div class="page-header">
+            <div>
+              <div class="page-title">Savings Goals</div>
+              <div class="page-sub">Track progress toward your targets</div>
+            </div>
+            <button class="btn btn-accent" id="addGoalBtn">+ New Goal</button>
+          </div>
+
+          <div class="goals-grid" id="goalsGrid">
+            <!-- Django: {% for goal in goals %} goal card here {% endfor %} -->
+            <div class="tx-empty">No goals set yet.</div>
+          </div>
+
+        </section>
+        <!-- END GOALS -->
+
+
+        <!-- ==========================================
+             PAGE: REPORTS (PLACEHOLDER)
+        =========================================== -->
+        <section class="page hidden" id="page-reports">
+          <div class="placeholder-page">
+            <div class="placeholder-icon">▦</div>
+            <div class="placeholder-title">Reports</div>
+            <div class="placeholder-desc">Detailed monthly and annual financial reports. Exportable as PDF or CSV. Coming in a future update.</div>
+            <div class="placeholder-tag">Planned Feature</div>
+          </div>
+        </section>
+
+
+        <!-- ==========================================
+             PAGE: TAX SUMMARY (PLACEHOLDER)
+        =========================================== -->
+        <section class="page hidden" id="page-tax">
+          <div class="placeholder-page">
+            <div class="placeholder-icon">▤</div>
+            <div class="placeholder-title">Tax Summary</div>
+            <div class="placeholder-desc">Automatic categorization of tax-deductible expenses and year-end summary generation. Coming in a future update.</div>
+            <div class="placeholder-tag">Planned Feature</div>
+          </div>
+        </section>
+
+
+        <!-- ==========================================
+             PAGE: SETTINGS
+        =========================================== -->
+        <section class="page hidden" id="page-settings">
+
+          <div class="page-header">
+            <div>
+              <div class="page-title">Settings</div>
+              <div class="page-sub">Account and application preferences</div>
+            </div>
+          </div>
+
+          <div class="settings-grid">
+
+            <div class="settings-group">
+              <div class="settings-group-title">Profile</div>
+              <div class="settings-row">
+                <label class="settings-label">Display Name</label>
+                <input type="text" class="settings-input" placeholder="Your name" value="John Doe"/>
+              </div>
+              <div class="settings-row">
+                <label class="settings-label">Email</label>
+                <input type="email" class="settings-input" placeholder="your@email.com"/>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="settings-group-title">Preferences</div>
+              <div class="settings-row">
+                <label class="settings-label">Currency</label>
+                <select class="settings-input">
+                  <option>USD — US Dollar</option>
+                  <option>EUR — Euro</option>
+                  <option>GBP — British Pound</option>
+                  <option>NPR — Nepalese Rupee</option>
+                </select>
+              </div>
+              <div class="settings-row">
+                <label class="settings-label">Start of Month</label>
+                <select class="settings-input">
+                  <option>1st</option>
+                  <option>15th</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="settings-group-title">Categories</div>
+              <div class="settings-row">
+                <label class="settings-label">Manage Categories</label>
+                <button class="btn btn-ghost">Edit Categories</button>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="settings-group-title">Data</div>
+              <div class="settings-row">
+                <label class="settings-label">Export Data</label>
+                <button class="btn btn-ghost">Export CSV</button>
+              </div>
+              <div class="settings-row">
+                <label class="settings-label">Delete All Data</label>
+                <button class="btn btn-danger">Delete Everything</button>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+        <!-- END SETTINGS -->
+
+      </main>
+      <!-- END PAGE CONTENT -->
+
+    </div>
+    <!-- END MAIN AREA -->
+
+  </div>
+  <!-- END APP SHELL -->
+
+
+  <!-- =============================================
+       MODAL: ADD / EDIT TRANSACTION
+       (reused for create and edit — JS toggles title)
+  ============================================== -->
+  <div class="modal-overlay hidden" id="txModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="txModalTitle">Add Transaction</div>
+        <button class="modal-close" id="txModalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <label class="form-label">Type</label>
+          <div class="toggle-group">
+            <button class="toggle-btn active" data-value="expense">Expense</button>
+            <button class="toggle-btn" data-value="income">Income</button>
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Amount</label>
+          <input type="number" class="form-input" id="txAmount" placeholder="0.00" step="0.01" min="0"/>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Description</label>
+          <input type="text" class="form-input" id="txDesc" placeholder="What was this for?"/>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Category</label>
+          <select class="form-input" id="txCategory">
+            <option value="">Select category</option>
+            <!-- Django: {% for cat in categories %} option here {% endfor %} -->
+            <option>Food &amp; Dining</option>
+            <option>Transport</option>
+            <option>Housing</option>
+            <option>Health</option>
+            <option>Entertainment</option>
+            <option>Salary</option>
+            <option>Freelance</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-input" id="txDate"/>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Notes</label>
+          <textarea class="form-input form-textarea" id="txNotes" placeholder="Optional notes..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="txModalCancel">Cancel</button>
+        <button class="btn btn-accent" id="txModalSave">Save Transaction</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="fin.js"></script>
+</body>
+</html>
