@@ -1,3 +1,5 @@
+from unittest import expectedFailure
+
 import requests
 
 
@@ -6,9 +8,15 @@ def get():
     url =f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apikey}&units=metric"
     response = requests.get(url)
     value = response.json()
-    print(value["main"]["temp"]["cod"],"˚c")
+    t = (value["main"]["temp"])
+    h = (value["main"]["humidity"])
+    print(t)
+    print(h)
 
 print("weather predicting app")
 while True:
  city = input("enter city name : ")
- get()
+ if city:
+     get()
+else:
+    print("please enter city name")
