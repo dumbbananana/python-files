@@ -6,9 +6,9 @@ def get():
     url =f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apikey}&units=metric"
     response = requests.get(url)
     value = response.json()
-    print(value["main"]["temp"],"˚c")
+    print(value["main"]["temp"]["cod"],"˚c")
 
+print("weather predicting app")
 while True:
- print("weather predicting app")
  city = input("enter city name : ")
  get()
