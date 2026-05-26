@@ -1,22 +1,29 @@
-from unittest import expectedFailure
-
-import requests
 
 
-def get():
-    apikey = "c38ae326a291c5c38c59b29c521f7cad"
-    url =f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apikey}&units=metric"
-    response = requests.get(url)
-    value = response.json()
-    t = (value["main"]["temp"])
-    h = (value["main"]["humidity"])
-    print(t)
-    print(h)
+from groq import Groq
 
-print("weather predicting app")
+
+
+client = Groq(api_key = "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")
+
+def called():
+     response=client.chat.completions.create(
+     messages=[{"role":"user", "content":give}],
+    model="llama-3.3-70b-versatile",
+
+    )
+
+     answer = response.choices[0].message.content
+     print("ai : ", answer)
+
+print("AI CONVO")
 while True:
- city = input("enter city name : ")
- if city:
-     get()
-else:
-    print("please enter city name")
+
+ give = input("you : ")
+ if give == "/q":
+     break
+ else:
+  called()
+
+
+
