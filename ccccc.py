@@ -13,7 +13,7 @@ def get():
     print(t)
     print(h)
 
-print("weather predicting app")AAA
+print("weather predicting app")
 while True:
  city = input("enter city name : ")
  if city:
