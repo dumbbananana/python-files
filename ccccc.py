@@ -4,7 +4,7 @@ from groq import Groq
 
 
 
-client = Groq(api_key = "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")
+client = Groq(api_key = "")
 
 history= []
 def called():
