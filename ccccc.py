@@ -1,6 +1,25 @@
-try:
-    print(g+"1")
-    print("helllo")
+studgpa= input("whose gpa you want to add : ")
+ask= input("addgpa: ")
 
-except NameError:
-    print("error")
+
+
+
+
+dictionary = {
+        studgpa: {
+            "gpa": ask
+        }
+        ,
+        studgpa: {
+            "gpa": ask
+        }
+    }
+
+whose = input("whose gpa you want")
+
+print("errpr finding data")
+
+try:
+    print(dictionary[whose]["gpa"])
+except:
+    print("cannot find data")
