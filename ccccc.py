@@ -1,17 +1,11 @@
-import math
 import math as m
 
+def calcualte ():
+    if operation == '+':
+       pass
 
+print("avilable operations \n+\n-\n*\n**\n/\n%")
+operation = float(input("enter your operation"))
+first = int(input("enter your first number"))
+second = int(input("enter your second number"))
 
-def function():
- return m.tan(number)
- return m.log(number,base=10)
-
-
-
-
-
-
-
-number = int(input("enter numbre"))
-print(function())
