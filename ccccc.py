@@ -1,6 +1,6 @@
 import math as m
 
-def calcualte ():
+def calculate ():
     try:
      if operation == "+":
        print(f"{first + second}")
@@ -23,8 +23,8 @@ def calcualte ():
 
 
 print("avilable operations \n+\n-\n*\n**\n/\n%")
-print("/q to quit")
 while True:
+ print("/q to quit")
  operation = (input("enter your operation : "))
  if operation == "/q":
      break
@@ -40,6 +40,5 @@ while True:
       print("enter value")
 
      else:
-         calcualte()
-
+        calculate()
 
