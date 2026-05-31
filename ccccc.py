@@ -1,25 +1,20 @@
-studgpa= input("whose gpa you want to add : ")
-ask= input("addgpa: ")
+from groq import  Groq
+x=0
+
+knowntopics = []
+while True:
+
+ ask=input(" Add new topics : ")
+ if ask in knowntopics:
+     print("already added")
+ else:
+  knowntopics.append(ask)
+  print(knowntopics)
+  if ask =="/q":
+      break
 
 
 
-
-
-dictionary = {
-        studgpa: {
-            "gpa": ask
-        }
-        ,
-        studgpa: {
-            "gpa": ask
-        }
-    }
-
-whose = input("whose gpa you want")
-
-print("errpr finding data")
-
-try:
-    print(dictionary[whose]["gpa"])
-except:
-    print("cannot find data")
+while x < len(knowntopics)-1:
+ print(knowntopics[x])
+ x=x+1
